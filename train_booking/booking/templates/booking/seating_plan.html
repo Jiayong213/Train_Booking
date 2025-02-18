@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Seating</title>
+    <style>
+        .coach {
+            margin-bottom:20px;
+        }
+        .seat {
+            display: inline-block;
+            width: 100px;
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+            background-color: #ffcccc;
+        }
+        .locked {
+            background-color: #ffcccc;
+        }
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Train Seating</h1>
+    {% for coach in coaches %}
+         <div class=":coach">
+            <h2>{{ coach }}</h2>
+            <ul>
+                {% for seat in coach.seats.all %}
+                <li class="seat {% if seat.is_locked %}locked{% endif %}">
+                    {{ seat.seat_number }}
+                    {% if not seat.is_locked %}
+                         <a href="{% url 'book_seat' seat.id %}">Book</a>
+                    {% else %}
+                          (Locked)
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        
+    {% endfor %}
+    
+</body>
+</html>
